@@ -1,0 +1,26 @@
+<section class="dashboard">
+	<h2>App Name: {{ title }}</h2>
+    <h4>{{ welcomeMessage }}</h4>
+	<p>Users: {{ users }}</p>
+	<p>Visits: {{ visits }}</p>
+
+	<h3>Vehicles</h3>
+	<table class="vehicles">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Model</th>
+				<th>Type</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr app-vehicle-row *ngFor="let v of vehicles" [vehicle]="v" (selected)="onSelected($event)"></tr>
+		</tbody>
+	</table>
+
+	<div *ngIf="selected" class="selected">
+		<h4>Selected vehicle</h4>
+		<pre>{{ selected | json }}</pre>
+	</div>
+</section>

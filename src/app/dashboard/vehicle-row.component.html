@@ -1,0 +1,30 @@
+<td (click)="emitSelect()" class="vehicle-row">{{ vehicle.id }}</td>
+<td (click)="emitSelect()">{{ vehicle.model }}</td>
+<td (click)="emitSelect()">{{ vehicle.kind }}</td>
+<td (click)="emitSelect()">
+  <ng-container [ngSwitch]="vehicle.kind">
+    <ng-container *ngSwitchCase="'car'">
+      <ng-container *ngIf="isCar(vehicle)">
+        Wheels: {{ vehicle.wheels }}, Seats: {{ vehicle.seats }}
+      </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'train'">
+      <ng-container *ngIf="isTrain(vehicle)">
+        Carriages: {{ vehicle.carriages }}, Electrified: {{ vehicle.electrified ? 'yes' : 'no' }}
+      </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'airplane'">
+      <ng-container *ngIf="isAirplane(vehicle)">
+        Engines: {{ vehicle.engines }}, Range: {{ vehicle.rangeKm }} km
+      </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'ship'">
+      <ng-container *ngIf="isShip(vehicle)">
+        Tonnage: {{ vehicle.tonnage }}, Length: {{ vehicle.lengthM }} m
+      </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      -
+    </ng-container>
+  </ng-container>
+</td>
