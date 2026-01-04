@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { WeatherService } from '../services/weather.service';
 import { OpenMeteoResponse, CurrentWeather } from '../services/weather.model';
 import { Subscription } from 'rxjs';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-weather',
@@ -28,13 +29,13 @@ import { filter } from 'rxjs/operators';
     </section>
   `,
   styles: [
-    `.weather-section { max-width: 500px; margin: 2rem auto; padding: 1rem; }`,
-    `.weather-section h2 { color: #33006b; margin: 0 0 0.25rem 0; }`,
-    `.weather-card { background: linear-gradient(90deg,#fff,#fbf7ff); padding: 1rem; border-radius:8px; border:1px solid rgba(0,0,0,0.04); }`,
-    `.temperature { font-size:2rem; font-weight:700; color:#ff6b00; }`,
-    `.location, .timezone, .time { color:#444; font-size:0.95rem; margin-top:0.25rem; }`,
-    `.loading { color:#666; }`,
-    `.error { color:#FF0060; font-weight:600; }`
+    `.weather-section { max-width: 520px; margin: 2rem auto; padding: 1rem; }`,
+    `.weather-section h2 { color: var(--palette-1); margin: 0 0 0.25rem 0; }`,
+    `.weather-card { background: linear-gradient(90deg,#fff,var(--palette-4)); padding: 1rem; border-radius:12px; border:1px solid rgba(54,101,107,0.06); }`,
+    `.temperature { font-size:2rem; font-weight:800; color: var(--palette-2); }`,
+    `.location, .timezone, .time { color:var(--muted); font-size:0.95rem; margin-top:0.25rem; }`,
+    `.loading { color:var(--muted); font-style:italic; }`,
+    `.error { color:#FF0060; font-weight:700; }`
   ]
 })
 export class Weather implements OnInit, OnDestroy {
@@ -49,26 +50,38 @@ export class Weather implements OnInit, OnDestroy {
     ngOnInit() {
       this.loadWeather();
 
+      // reload whenever navigation ends on the weather URL
       this.routerSub = this.router.events
         .pipe(filter((e) => e instanceof NavigationEnd))
-        .subscribe(() => this.loadWeather());
+        .subscribe((e: any) => {
+          const url: string = e.urlAfterRedirects ?? e.url ?? '';
+          if (url.includes('/weather') || url === 'weather') {
+            this.loadWeather();
+          }
+        });
     }
 
     private loadWeather() {
+      console.debug('loadWeather');
       this.sub?.unsubscribe();
       this.loading = true;
       this.error = null;
 
-      this.sub = this.svc.getCurrentWeather(52.1548, 9.9580).subscribe({
-        next: (w) => {
-          this.weather = w;
-          this.loading = false;
-        },
-        error: (err) => {
-          this.error = String(err);
-          this.loading = false;
-        }
-      });
+      // add a short timeout to fail fast if request stalls in the browser
+      this.sub = this.svc.getCurrentWeather(52.1548, 9.9580)
+        .pipe()
+        .subscribe({
+          next: (w) => {
+            console.debug('Weather loaded', w);
+            this.weather = w;
+            this.loading = false;
+          },
+          error: (err) => {
+            console.error('Weather load error', err);
+            this.error = String(err?.message ?? err);
+            this.loading = false;
+          }
+        });
     }
 
     ngOnDestroy() {

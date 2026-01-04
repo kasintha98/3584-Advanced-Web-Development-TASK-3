@@ -26,12 +26,12 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
     </section>
   `,
   styles: [
-    `.login-section { max-width: 350px; margin: 2rem auto; background: linear-gradient(90deg,#fff,#f8f6ff); border-radius: 12px; box-shadow: 0 2px 12px rgba(119,2,255,0.08); padding: 2rem; }`,
-    `.form-group { margin-bottom: 1.25rem; }`,
-    `label { display:block; margin-bottom:0.25rem; color:#33006b; font-weight:600; }`,
-    `input { width:100%; padding:0.5rem; border-radius:6px; border:1px solid #ccc; font-size:1rem; }`,
-    `.error { color:#FF0060; font-size:0.85rem; margin-top:0.25rem; }`,
-    `.success { margin-top:1rem; color:green; font-weight:600; }`
+    `.login-section { max-width: 380px; margin: 2rem auto; background: linear-gradient(90deg,var(--palette-4),var(--palette-3)); border-radius: 12px; box-shadow: 0 8px 20px rgba(54,101,107,0.06); padding: 1.75rem; }`,
+    `.form-group { margin-bottom: 1rem; }`,
+    `label { display:block; margin-bottom:0.25rem; color:var(--palette-1); font-weight:700; }`,
+    `input { width:100%; padding:0.55rem; border-radius:8px; border:1px solid rgba(0,0,0,0.06); font-size:1rem; }`,
+    `.error { color:var(--palette-1); font-size:0.85rem; margin-top:0.25rem; }`,
+    `.success { margin-top:1rem; color:var(--palette-2); font-weight:700; }`
   ]
 })
 export class Login {

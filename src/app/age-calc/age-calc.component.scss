@@ -1,11 +1,25 @@
 .age-calc {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  max-width: 360px;
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 420px;
+  background: linear-gradient(180deg,#fff,var(--palette-4));
+  border: 1px solid rgba(54,101,107,0.04);
 }
 
-label {
-  display: block;
-  margin: 6px 0;
+.age-calc h3 { margin: 0 0 .5rem 0; color: var(--palette-1); font-size:1.1rem; }
+
+.age-calc label { display:block; margin:10px 0 6px 0; color:var(--palette-1); font-weight:600; }
+
+.age-calc input[type="number"] {
+  display:block;
+  width:100%;
+  padding:.55rem .6rem;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  font-size:1rem;
 }
+
+.age-calc p { color: var(--muted); margin: .4rem 0; }
+
+.age-actions { margin-top: .75rem; }

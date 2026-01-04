@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root {
+	--palette-1: #36656B; /* primary */
+	--palette-2: #75B06F; /* accent */
+	--palette-3: #DAD887; /* warm */
+	--palette-4: #F0F8A4; /* pale */
+
+	--bg: #ffffff;
+	--muted: #6b6b6b;
+	--radius: 8px;
+}
+
+* { box-sizing: border-box; }
+html,body { height:100%; margin:0; font-family: Inter, Roboto, system-ui, -apple-system, 'Segoe UI', Arial; background: var(--bg); color: #222; }
+
+.container { max-width: 1024px; margin: 0 auto; padding: 1rem; }
+
+.card {
+	background: linear-gradient(180deg, #fff, #fbfbfb);
+	border: 1px solid rgba(54,101,107,0.06);
+	border-radius: var(--radius);
+	padding: 1rem;
+	box-shadow: 0 6px 18px rgba(54,101,107,0.04);
+}
+
+.btn {
+	display:inline-block; padding: .5rem .75rem; border-radius: 6px; font-weight:600; cursor:pointer; text-align:center; border:none;
+}
+.btn-primary { background: var(--palette-1); color: #fff; }
+.btn-accent { background: var(--palette-2); color: #fff; }
+
+.muted { color: var(--muted); }
+
+.chip { display:inline-block; padding:.25rem .5rem; border-radius:999px; background:var(--palette-4); color:var(--palette-1); font-weight:600; }
+
+.accent-line { height:4px; border-radius:2px; background: linear-gradient(90deg,var(--palette-1),var(--palette-2)); }
+
+
+.flex { display:flex; }
+.space-between { justify-content:space-between; }
+.gap-1 { gap: .5rem; }
+.center { display:flex; align-items:center; justify-content:center; }
+
+.heading { color: var(--palette-1); font-weight:700; }
+
+
+.panel { padding: .75rem; border-radius:6px; background: rgba(117,176,111,0.04); }
+
+
+@media (max-width:600px) {
+	.container { padding: .75rem; }
+}
+

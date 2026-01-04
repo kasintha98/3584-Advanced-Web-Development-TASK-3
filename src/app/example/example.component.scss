@@ -1,5 +1,9 @@
 .example {
-  padding: 8px;
-  border: 1px dashed #888;
-  border-radius: 4px;
+  padding: 12px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--palette-4), #fff);
+  border: 1px solid rgba(54,101,107,0.06);
 }
+
+.example-title { color: var(--palette-1); font-weight:700; margin-bottom:.5rem; }
+.example-body { color: var(--muted); }

@@ -1,6 +1,11 @@
 .vehicle-row {
   cursor: pointer;
+  padding: .6rem .75rem;
+  border-bottom: 1px solid rgba(54,101,107,0.04);
+  align-items: center;
+  display: flex;
+  gap: .6rem;
 }
-.vehicle-row:hover {
-  background: #f3f3f3;
-}
+.vehicle-row:hover { background: linear-gradient(90deg, rgba(117,176,111,0.06), rgba(54,101,107,0.02)); }
+.vehicle-name { font-weight:600; color: var(--palette-1); }
+.vehicle-meta { color: var(--muted); font-size: .9rem; }
