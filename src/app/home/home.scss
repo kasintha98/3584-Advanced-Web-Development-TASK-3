@@ -1,0 +1,11 @@
+.home styles
+/* home styles */
+.home-hero {
+	padding: 1.25rem;
+	border-radius: 8px;
+	background: linear-gradient(90deg, #fff, rgba(240,248,164,0.02));
+	border: 1px solid rgba(54,101,107,0.04);
+	margin-bottom: 1rem;
+}
+
+.home-intro { color: var(--muted); line-height:1.45 }

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { WeatherService } from '../services/weather.service';
 import { OpenMeteoResponse, CurrentWeather } from '../services/weather.model';
 import { Subscription } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-weather',
@@ -40,11 +42,23 @@ export class Weather implements OnInit, OnDestroy {
     loading = false;
     error: string | null = null;
     private sub?: Subscription;
+    private routerSub?: Subscription;
 
-    constructor(private svc: WeatherService) {}
+    constructor(private svc: WeatherService, private router: Router) {}
 
     ngOnInit() {
+      this.loadWeather();
+
+      this.routerSub = this.router.events
+        .pipe(filter((e) => e instanceof NavigationEnd))
+        .subscribe(() => this.loadWeather());
+    }
+
+    private loadWeather() {
+      this.sub?.unsubscribe();
       this.loading = true;
+      this.error = null;
+
       this.sub = this.svc.getCurrentWeather(52.1548, 9.9580).subscribe({
         next: (w) => {
           this.weather = w;
@@ -59,5 +73,6 @@ export class Weather implements OnInit, OnDestroy {
 
     ngOnDestroy() {
       this.sub?.unsubscribe();
+      this.routerSub?.unsubscribe();
     }
   }
