@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Vehicle, Car, Train, Airplane, Ship } from '../services/vehicles.service';
 
 @Component({
-  // use an attribute selector on <tr> so the DOM remains valid for tables
   selector: 'tr[app-vehicle-row]',
   standalone: true,
   imports: [CommonModule],

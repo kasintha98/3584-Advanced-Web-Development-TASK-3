@@ -1,11 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WeatherService } from '../services/weather.service';
 import { OpenMeteoResponse, CurrentWeather } from '../services/weather.model';
 import { Subscription } from 'rxjs';
-import { Router, NavigationEnd, ActivationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-weather',
@@ -43,49 +40,34 @@ export class Weather implements OnInit, OnDestroy {
     loading = false;
     error: string | null = null;
     private sub?: Subscription;
-    private routerSub?: Subscription;
 
-    constructor(private svc: WeatherService, private router: Router) {}
+    constructor(private svc: WeatherService, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
       this.loadWeather();
-
-      // reload whenever navigation ends on the weather URL
-      this.routerSub = this.router.events
-        .pipe(filter((e) => e instanceof NavigationEnd))
-        .subscribe((e: any) => {
-          const url: string = e.urlAfterRedirects ?? e.url ?? '';
-          if (url.includes('/weather') || url === 'weather') {
-            this.loadWeather();
-          }
-        });
     }
 
     private loadWeather() {
-      console.debug('loadWeather');
       this.sub?.unsubscribe();
       this.loading = true;
       this.error = null;
 
-      // add a short timeout to fail fast if request stalls in the browser
       this.sub = this.svc.getCurrentWeather(52.1548, 9.9580)
-        .pipe()
         .subscribe({
           next: (w) => {
-            console.debug('Weather loaded', w);
             this.weather = w;
             this.loading = false;
+            this.cdr.markForCheck(); // used for change detection to update the UI after recieving data
           },
           error: (err) => {
-            console.error('Weather load error', err);
             this.error = String(err?.message ?? err);
             this.loading = false;
+            this.cdr.markForCheck();
           }
         });
     }
 
     ngOnDestroy() {
       this.sub?.unsubscribe();
-      this.routerSub?.unsubscribe();
     }
   }
